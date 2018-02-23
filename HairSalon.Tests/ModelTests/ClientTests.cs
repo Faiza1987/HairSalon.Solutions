@@ -56,7 +56,7 @@ namespace HairSalon.Tests
     }
 
     [TestMethod]
-    public void Save_AssignsIdToObject_Id()
+    public void Save_AssignsIdToClient_Id()
     {
       //Arrange
       Client testClient = new Client("Nazia",1);

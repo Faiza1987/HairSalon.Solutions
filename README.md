@@ -19,12 +19,12 @@ Navigate to localhost:5000 in your preferred browser.
 
 * Program should allow the user to get a list of all stylists on the database.
 * Program should allow the user to save stylists to the database.
-* Program should should allow user to update stylist information () in the database.
-* Program should allow user to update client information (name, phone, stylist) in the database.
+* Program should should allow user to update stylist information (name, client) in the database.
+* Program should allow user to update client information (name, stylist) in the database.
 *  
 *
 *
-*
+* 
 
 
 #### Technologies Used
