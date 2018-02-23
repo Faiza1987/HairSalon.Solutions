@@ -1,25 +1,22 @@
-using System;
-using HairSalon;
-using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using MySql.Data.MySqlClient;
+using System;
 
 namespace HairSalon.Models
 {
     public class Client
     {
-        private string _fullName;
-        private int _phoneNumber;
+        private int _id;
+        private string _clientName;
         private int _stylistId;
-        private int _clientId;
 
-        public Client(string fullName, int phoneNumber, int stylistId, int clientId = 0)
+        public Client(string clientName, int stylistId, int Id = 0)
         {
-            _fullName = fullName;
-            _phoneNumber = phoneNumber;
+            _clientName = clientName;
             _stylistId = stylistId;
-            _clientId = clientId;
+            _id = Id;
         }
-        //OVERRIDE CODE -> If 2 clients are identical, a duplicate will not be created.
+
         public override bool Equals(System.Object otherClient)
         {
             if (!(otherClient is Client))
@@ -29,83 +26,207 @@ namespace HairSalon.Models
             else
             {
                 Client newClient = (Client) otherClient;
-                bool clientIdEquality = (this.GetClientId() == newClient.GetClientId());
-                bool fullNameEquality = (this.GetFullName() == newClient.GetFullName());
-                bool stylistEquality = (this.GetStylistId() == newClient.GetStylistId());
+                bool idEquality = (this.GetId() == newClient.GetId());
+                bool clientNameEquality = (this.GetClientName() == newClient.GetClientName());
+                bool stylistEquality = this.GetStylistId() == newClient.GetStylistId();
 
-                return (clientIdEquality && fullNameEquality && stylistEquality);
+                return (idEquality && clientNameEquality && stylistEquality);
             }
         }
+
         public override int GetHashCode()
         {
-            return this.GetClientId().GetHashCode();
+            return this.GetClientName().GetHashCode();
         }
         //GETTERS AND SETTERS
-        public int GetClientId()
+        public string GetClientName()
         {
-            return _clientId;
+            return _clientName;
         }
-        public void SetClientId(int clientId)
+        public void SetClientName(string clientName)
         {
-            _clientId = clientId;
-        }
-        public string GetFullName()
-        {
-            return _fullName;
-        }
-        public void SetFullName(string fullName)
-        {
-            _fullName = fullName;
-        }
-        public int GetPhoneNumber()
-        {
-            return _phoneNumber;
-        }
-        public void SetPhoneNumber(int phoneNumber)
-        {
-            _phoneNumber = phoneNumber;
+            _clientName = clientName;
         }
         public int GetStylistId()
         {
             return _stylistId;
         }
-        public void SetStylistId(int stylistId)
+        public int GetId()
         {
-            _stylistId = stylistId;
-        }
-        public static List<Client> GetAllClients()
-        {
-            //code here
-            return null;
+            return _id;
         }
 
+        //Method to Get All clients from the database
+        public static List<Client> GetAll()
+        {
+            List<Client> allClients = new List<Client> {};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM clients;";
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            while(rdr.Read())
+            {
+                int clientId = rdr.GetInt32(0);
+                string clientName = rdr.GetString(1);
+                int clientStylistId = rdr.GetInt32(2);
+
+                Client newClient = new Client(clientName, clientStylistId, clientId);
+                allClients.Add(newClient);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return allClients;
+        }
+        //Method to save clients to database
         public void Save()
         {
-            //code here
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
 
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"INSERT INTO clients (client_name, stylist_id) VALUES (@clientName, @stylist_id);";
+
+            MySqlParameter clientName = new MySqlParameter();
+            clientName.ParameterName = "@clientName";
+            clientName.Value = this._clientName;
+            cmd.Parameters.Add(clientName);
+
+            MySqlParameter stylistId = new MySqlParameter();
+            stylistId.ParameterName = "@stylist_id";
+            stylistId.Value = this._stylistId;
+            cmd.Parameters.Add(stylistId);
+
+            cmd.ExecuteNonQuery();
+            _id = (int) cmd.LastInsertedId;
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
         }
-        //Method to search for clients in the database via id
+        //Method to search for clients in the database via id by searching & verifying all the rows (id, name, stylist id) associated with that Id & returning that client.
         public static Client Find(int id)
         {
-            //code here
-            return null;
-        }
-        //Method to update specific client info in the database. This is void because it will be affecting specific clients in the database and will not return anything - hence the term void.
-        public void UpdateClientInfo(string newClientName, int newClientPhoneNumber)
-        {
-            //code here
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM `clients` WHERE id = @thisId;";
 
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@thisId";
+            searchId.Value = id;
+            cmd.Parameters.Add(searchId);
+
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+            int clientId = 0;
+            string clientName = "";
+            int clientStylistId = 0;
+
+
+            while (rdr.Read())
+            {
+                clientId = rdr.GetInt32(0);
+                clientName = rdr.GetString(1);
+                clientStylistId = rdr.GetInt32(2);
+            }
+
+            Client newClient = new Client(clientName, clientStylistId, clientId);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return newClient;
         }
-        //Method to delete specific clients in the database. This is void because it will be affecting specific clients in the database and will not return anything - hence the term void.
+
+        public void UpdateClientName(string newClientName)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"UPDATE clients SET client_name = @newClientName WHERE id = @searchId;";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = _id;
+            cmd.Parameters.Add(searchId);
+
+            MySqlParameter clientName = new MySqlParameter();
+            clientName.ParameterName = "@newClientName";
+            clientName.Value = newClientName;
+            cmd.Parameters.Add(clientName);
+
+            cmd.ExecuteNonQuery();
+            _clientName = newClientName;
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
+        public void UpdateStylist(int newStylistId)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"UPDATE clients SET stylist_id = @newStylistId WHERE id = @thisId;";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@thisId";
+            searchId.Value = _id;
+            cmd.Parameters.Add(searchId);
+
+            MySqlParameter stylistId = new MySqlParameter();
+            stylistId.ParameterName = "@newStylistId";
+            stylistId.Value = newStylistId;
+            cmd.Parameters.Add(stylistId);
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            _stylistId = newStylistId;
+        }
+
         public void DeleteClient()
         {
-            //code here
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM clients WHERE id = @thisId;";
 
+            MySqlParameter thisId = new MySqlParameter();
+            thisId.ParameterName = "@thisId";
+            thisId.Value = _id;
+            cmd.Parameters.Add(thisId);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
         }
-        //Method to delete all the clients in the database. This is static because it will be affecting the class and not specific clients.
+
         public static void DeleteAll()
         {
-            //code here
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM clients;";
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
         }
     }
 }
