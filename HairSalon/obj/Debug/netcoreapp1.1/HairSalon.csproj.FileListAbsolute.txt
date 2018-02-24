@@ -1,0 +1,9 @@
+C:\Users\faiza\OneDrive\Desktop\HairSalon.Solutions\HairSalon\bin\Debug\netcoreapp1.1\HairSalon.deps.json
+C:\Users\faiza\OneDrive\Desktop\HairSalon.Solutions\HairSalon\bin\Debug\netcoreapp1.1\HairSalon.runtimeconfig.json
+C:\Users\faiza\OneDrive\Desktop\HairSalon.Solutions\HairSalon\bin\Debug\netcoreapp1.1\HairSalon.runtimeconfig.dev.json
+C:\Users\faiza\OneDrive\Desktop\HairSalon.Solutions\HairSalon\obj\Debug\netcoreapp1.1\HairSalon.csproj.CoreCompileInputs.cache
+C:\Users\faiza\OneDrive\Desktop\HairSalon.Solutions\HairSalon\obj\Debug\netcoreapp1.1\HairSalon.AssemblyInfo.cs
+C:\Users\faiza\OneDrive\Desktop\HairSalon.Solutions\HairSalon\bin\Debug\netcoreapp1.1\HairSalon.dll
+C:\Users\faiza\OneDrive\Desktop\HairSalon.Solutions\HairSalon\bin\Debug\netcoreapp1.1\HairSalon.pdb
+C:\Users\faiza\OneDrive\Desktop\HairSalon.Solutions\HairSalon\obj\Debug\netcoreapp1.1\HairSalon.dll
+C:\Users\faiza\OneDrive\Desktop\HairSalon.Solutions\HairSalon\obj\Debug\netcoreapp1.1\HairSalon.pdb

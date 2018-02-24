@@ -2,11 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>My Awesome Site!</title>
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+    <title>Hair Salon</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='/css/styles.css'>
   </head>
   <body>
-    @RenderBody()
+    <div class="container">
+      <header>
+        <div class="row main">
+          <div class="col-md-12">
+            <a href="/" id="home" class="btn btn-default glyphicon glyphicon-home"></a>
+            <h1>Hair Salon</h1>
+          </div>
+        </div>
+      </header>
+      @RenderBody()
+    </div>
   </body>
 </html>
