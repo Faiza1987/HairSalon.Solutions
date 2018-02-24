@@ -10,13 +10,13 @@ namespace HairSalon.Tests
     {
         public ClientTests()
         {
-            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=faiza_husain_test;";
+            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=saneyee_sarkar_test;";
         }
 
         public void Dispose()
         {
             Client.DeleteAll();
-            //Stylist.DeleteAll();
+            Stylist.DeleteAll();
         }
 
         [TestMethod]
@@ -33,8 +33,8 @@ namespace HairSalon.Tests
         public void Equals_OverrideTrueIfClientsAreTheSame_Client()
         {
             // Arrange, Act
-            Client firstClient = new Client("Faiza",1);
-            Client secondClient = new Client("Faiza",1);
+            Client firstClient = new Client("Becky",1);
+            Client secondClient = new Client("Becky",1);
 
             // Assert
             Assert.AreEqual(firstClient, secondClient);
@@ -44,7 +44,7 @@ namespace HairSalon.Tests
         public void Save_SavesToDatabase_ClientList()
         {
             //Arrange
-            Client testClient = new Client("Mehreen",1);
+            Client testClient = new Client("Bella",1);
 
             //Act
             testClient.Save();
@@ -59,7 +59,7 @@ namespace HairSalon.Tests
         public void Save_AssignsIdToObject_Id()
         {
             //Arrange
-            Client testClient = new Client("Nazia",1);
+            Client testClient = new Client("Bell",1);
 
             //Act
             testClient.Save();
@@ -76,7 +76,7 @@ namespace HairSalon.Tests
         public void Find_FindsClientInDatabase_Client()
         {
             //Arrange
-            Client testClient = new Client("Uzma",1);
+            Client testClient = new Client("Belle",1);
             testClient.Save();
 
             //Act
@@ -87,13 +87,13 @@ namespace HairSalon.Tests
         }
 
         [TestMethod]
-        public void Update_UpdatesClientNameInDatabase_String()
+        public void Update_UpdatesClientInDatabase_String()
         {
             //Arrange
-            string clientName = "Nisha";
+            string clientName = "nessa";
             Client testClient = new Client(clientName, 1);
             testClient.Save();
-            string newClientName = "Zehra";
+            string newClientName = "Bellisa";
 
             //Act
             testClient.UpdateClientName(newClientName);
@@ -108,10 +108,11 @@ namespace HairSalon.Tests
         public void DeleteClient_DeleteClientInDatabase_Null()
         {
             //Arrange
-            string clientName = "Fareha";
+            string clientName = "Tabella";
             Client testClient = new Client(clientName, 1);
             testClient.Save();
             // string deletedClient = "";
+
             //Act
             testClient.DeleteClient();
             int result = Client.GetAll().Count;

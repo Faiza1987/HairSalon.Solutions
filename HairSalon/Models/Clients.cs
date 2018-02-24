@@ -6,15 +6,34 @@ namespace HairSalon.Models
 {
     public class Client
     {
-        private int _id;
         private string _clientName;
         private int _stylistId;
+        private int _id;
 
         public Client(string clientName, int stylistId, int Id = 0)
         {
             _clientName = clientName;
             _stylistId = stylistId;
             _id = Id;
+        }
+        public override int GetHashCode()
+        {
+            return this.GetClientName().GetHashCode();
+        }
+
+        public string GetClientName()
+        {
+            return _clientName;
+        }
+
+        public int GetId()
+        {
+            return _id;
+        }
+
+        public int GetStylistId()
+        {
+            return _stylistId;
         }
 
         public override bool Equals(System.Object otherClient)
@@ -34,29 +53,6 @@ namespace HairSalon.Models
             }
         }
 
-        public override int GetHashCode()
-        {
-            return this.GetClientName().GetHashCode();
-        }
-        //GETTERS AND SETTERS
-        public string GetClientName()
-        {
-            return _clientName;
-        }
-        public void SetClientName(string clientName)
-        {
-            _clientName = clientName;
-        }
-        public int GetStylistId()
-        {
-            return _stylistId;
-        }
-        public int GetId()
-        {
-            return _id;
-        }
-
-        //Method to Get All clients from the database
         public static List<Client> GetAll()
         {
             List<Client> allClients = new List<Client> {};
@@ -81,7 +77,7 @@ namespace HairSalon.Models
             }
             return allClients;
         }
-        //Method to save clients to database
+
         public void Save()
         {
             MySqlConnection conn = DB.Connection();
@@ -108,7 +104,7 @@ namespace HairSalon.Models
                 conn.Dispose();
             }
         }
-        //Method to search for clients in the database via id by searching & verifying all the rows (id, name, stylist id) associated with that Id & returning that client.
+
         public static Client Find(int id)
         {
             MySqlConnection conn = DB.Connection();
@@ -169,29 +165,6 @@ namespace HairSalon.Models
             {
                 conn.Dispose();
             }
-        }
-
-        public void UpdateStylist(int newStylistId)
-        {
-            MySqlConnection conn = DB.Connection();
-            conn.Open();
-
-            var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"UPDATE clients SET stylist_id = @newStylistId WHERE id = @thisId;";
-
-            MySqlParameter searchId = new MySqlParameter();
-            searchId.ParameterName = "@thisId";
-            searchId.Value = _id;
-            cmd.Parameters.Add(searchId);
-
-            MySqlParameter stylistId = new MySqlParameter();
-            stylistId.ParameterName = "@newStylistId";
-            stylistId.Value = newStylistId;
-            cmd.Parameters.Add(stylistId);
-
-            cmd.ExecuteNonQuery();
-            conn.Close();
-            _stylistId = newStylistId;
         }
 
         public void DeleteClient()

@@ -13,8 +13,8 @@ namespace HairSalon.Controllers
             return View();
         }
 
-        [HttpGet("/stylists/new")]
-        public ActionResult AddNewStylist()
+        [HttpGet("/stylists/form")]
+        public ActionResult AddStylistForm()
         {
             return View();
         }
@@ -41,7 +41,7 @@ namespace HairSalon.Controllers
         {
             Dictionary<string, object> model = new Dictionary<string, object>();
             Stylist selectedStylist = Stylist.Find(id);
-            List<Client> stylistClients = selectedStylist.GetStylistClients();
+            List<Client> stylistClients = selectedStylist.GetClients();
             model.Add("stylist", selectedStylist);
             model.Add("clients", stylistClients);
             return View(model);
@@ -61,17 +61,18 @@ namespace HairSalon.Controllers
             newClient.Save();
             Dictionary<string, object> model = new Dictionary<string, object>();
             Stylist selectedStylist = Stylist.Find(id);
-            List<Client> allClients = selectedStylist.GetStylistClients();
+            List<Client> allClients = selectedStylist.GetClients();
             model.Add("stylist", selectedStylist);
             model.Add("clients", allClients);
             return View("StylistDetail", model);
         }
 
-        [HttpGet("/stylists/{id}/clientlist")]        public ActionResult ViewClientList(int id)
+        [HttpGet("/stylists/{id}/clientlist")]
+        public ActionResult ViewClientList(int id)
         {
             Dictionary<string, object> model = new Dictionary<string, object>();
             Stylist selectedStylist = Stylist.Find(id);
-            List<Client> allClients = selectedStylist.GetStylistClients();
+            List<Client> allClients = selectedStylist.GetClients();
             model.Add("stylist", selectedStylist);
             model.Add("clients", allClients);
             return View("StylistDetail", model);
@@ -99,6 +100,5 @@ namespace HairSalon.Controllers
             thisClient.DeleteClient();
             return RedirectToAction("Index");
         }
-
     }
 }
