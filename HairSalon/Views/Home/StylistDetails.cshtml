@@ -3,22 +3,21 @@ Layout = "_Layout";
 }
 
 <div class="container">
-        <h2>@Model["stylist"].GetName()</h2>
+        <h2>Clients of @Model["stylist"].GetName()</h2>
         <hr>
+        <br>
         <ol>
         @foreach (var client in @Model["clients"])
         {
           <li>@client.GetClientName() | <a href="/clients/@client.GetId()/edit">Edit</a>
-          || <a href="/clients/@client.GetId()/delete">Delete</a>
+          | <a href="/clients/@client.GetId()/delete">Delete</a>
           </li>
         }
-        <br>
-        <br>
-        <hr>
         </ol>
+        <br>
         <hr>
-        <br>
         <p><a href='/stylists/@Model["stylist"].GetId()/clients/new'>Add a new client</a></p>
-        <br>
-        <p><a href='/'>Back Home</a></p>
+        <hr>
+        <p><a href='/'>Home</a></p>
+        <hr>
     </div>

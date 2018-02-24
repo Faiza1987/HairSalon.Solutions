@@ -3,11 +3,12 @@
 }
 
 <div class="container">
-        <h3>Stylists: </h3>
+        <h3>List of Stylists</h3>
         @if (@Model.Count == 0)
         {
-          <h5>No Stylists have been added yet!</h5>
+          <h3>No Stylists have been added yet!</h3>
         }
+        <br>
         <br>
         <hr>
         <ol>
@@ -19,6 +20,8 @@
         <hr>
         <br>
         <hr>
-        <p><a href='/'>Home</a></p>
+        <h4><a href='/stylists/form'>Add a new Stylist</a></h4>
+        <hr>
+        <h4><a href='/'>Home</a></h4>
         <hr>
     </div>
