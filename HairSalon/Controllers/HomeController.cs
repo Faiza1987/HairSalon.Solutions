@@ -50,17 +50,6 @@ namespace HairSalon.Controllers
             return View(newStylist);
         }
 
-        [HttpGet("/stylist/{id}/clients/{id2}/update")]
-        public ActionResult ClientUpdate(int id, int id2)
-        {
-            Dictionary<string, object> model = new Dictionary<string, object>{};
-            Stylist newStylist = Stylist.Find(id);
-            Client newClient = Client.Find(id2);
-            model.Add("stylist", newStylist);
-            model.Add("client", newClient);
-            return View(model);
-        }
-
         [HttpGet("/stylist/{id}/remove")]
         public ActionResult StylistRemove(int id)
         {
@@ -113,18 +102,29 @@ namespace HairSalon.Controllers
             return View("Stylists", Stylist.GetAll());
         }
 
-        [HttpPost("/stylist/{id}/clients/{id2}/update")]
-        public ActionResult ClientUpdatePost(int id, int id2)
-        {
-            Dictionary<string, object> model = new Dictionary<string, object>{};
+        // [HttpGet("/stylist/{id}/clients/{id2}/update")]
+        // public ActionResult ClientUpdate(int id, int id2)
+        // {
+        //     Dictionary<string, object> model = new Dictionary<string, object>{};
+        //     Stylist newStylist = Stylist.Find(id);
+        //     Client newClient = Client.Find(id2);
+        //     model.Add("stylist", newStylist);
+        //     model.Add("client", newClient);
+        //     return View(model);
+        // }
 
-            Client newClient = Client.Find(id2);
-            newClient.UpdateName(Request.Form["client-name"]);
-
-            model.Add("stylist", Stylist.Find(id));
-            model.Add("clients", Stylist.Find(id).GetAllClients());
-
-            return View("StylistDetail", model);
-        }
+        // [HttpPost("/stylist/{id}/clients/{id2}/update")]
+        // public ActionResult ClientUpdatePost(int id, int id2)
+        // {
+        //     Dictionary<string, object> model = new Dictionary<string, object>{};
+        //
+        //     Client newClient = Client.Find(id2);
+        //     newClient.UpdateName(Request.Form["client-name"]);
+        //
+        //     model.Add("stylist", Stylist.Find(id));
+        //     model.Add("clients", Stylist.Find(id).GetAllClients());
+        //
+        //     return View("StylistDetail", model);
+        // }
     }
 }
