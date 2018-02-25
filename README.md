@@ -7,9 +7,9 @@ A web app, built with C#, that allows users/salon employees to add stylists to t
 
 * Clone this repository.
 
-* In your preferred shell, navigate to the Palindromes folder and run the following commands:
+* In your preferred shell, navigate to the HairSalon.Solutions folder and run the following commands:
 
-* $ dotnet restore
+* $ dotnet restore on all folders containing a csproj file
 (above not required for .NET Core 2.0 SDK or newer releases)
 
 * $ dotnet run
@@ -19,16 +19,19 @@ Navigate to localhost:5000 in your preferred browser.
 
 * Program should allow the user to get a list of all stylists on the database.
 * Program should allow the user to save stylists to the database.
-* Program should should allow user to update stylist information (name, client) in the database.
-* Program should allow user to update client information (name, stylist) in the database.
-*  
-*
-*
-* 
+* Program should allow user to update stylist information (name) in the database.
+* Program should allow user to add a client to the stylist in the database.
+* Program should allow user to delete a stylist from the database.
+* Program should allow user to delete a client from the stylist list and the database.
 
 
 #### Technologies Used
   * Atom - Open-source, hackable code editor running on the Electron framework.
+  * C#
+  * MySQL database
+  * phpMyAdmin
+  * HTML
+  * Bootstrap
 
 #### Support and Contact Details
   * If you encounter any bugs or would like to make suggestions regarding this project, please feel free to open an issue within the repository or email me at faiza.ahsan1222@gmail.com

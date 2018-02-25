@@ -152,7 +152,7 @@ namespace HairSalon.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            //Query to update clinet info in the table called Clients based on id.
+            //Query to update client info in the table called Clients based on id.
             cmd.CommandText = @"UPDATE clients SET name = @newName WHERE id = @thisId;";
 
             //This will look for the cliend by id
@@ -180,6 +180,7 @@ namespace HairSalon.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
+            //Method to delete client info from the table based on id
             cmd.CommandText = @"DELETE FROM clients WHERE id = @thisId;";
 
             MySqlParameter clientId = new MySqlParameter();
