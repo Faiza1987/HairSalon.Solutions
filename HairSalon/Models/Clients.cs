@@ -145,34 +145,34 @@ namespace HairSalon.Models
             }
             return foundClient;
         }
-        //Method to update the name of the client
-        public void UpdateName(string newNameInput)
-        {
-            MySqlConnection conn = DB.Connection();
-            conn.Open();
-
-            var cmd = conn.CreateCommand() as MySqlCommand;
-            //Query to update client info in the table called Clients based on id.
-            cmd.CommandText = @"UPDATE clients SET name = @newName WHERE id = @thisId;";
-
-            //This will look for the cliend by id
-            MySqlParameter clientId = new MySqlParameter();
-            clientId.ParameterName = "@thisId";
-            clientId.Value = this._id;
-            cmd.Parameters.Add(clientId);
-            //And then the new name will overwrite the name that is already in the table
-            MySqlParameter newName = new MySqlParameter();
-            newName.ParameterName = "@newName";
-            newName.Value = newNameInput;
-            cmd.Parameters.Add(newName);
-
-            cmd.ExecuteNonQuery();
-            conn.Close();
-            if(conn != null)
-            {
-              conn.Dispose();
-            }
-        }
+        // //Method to update the name of the client
+        // public void UpdateName(string newNameInput)
+        // {
+        //     MySqlConnection conn = DB.Connection();
+        //     conn.Open();
+        //
+        //     var cmd = conn.CreateCommand() as MySqlCommand;
+        //     //Query to update client info in the table called Clients based on id.
+        //     cmd.CommandText = @"UPDATE clients SET name = @newName WHERE id = @thisId;";
+        //
+        //     //This will look for the client by id
+        //     MySqlParameter clientId = new MySqlParameter();
+        //     clientId.ParameterName = "@thisId";
+        //     clientId.Value = this._id;
+        //     cmd.Parameters.Add(clientId);
+        //     //And then the new name will overwrite the name that is already in the table
+        //     MySqlParameter newName = new MySqlParameter();
+        //     newName.ParameterName = "@newName";
+        //     newName.Value = newNameInput;
+        //     cmd.Parameters.Add(newName);
+        //
+        //     cmd.ExecuteNonQuery();
+        //     conn.Close();
+        //     if(conn != null)
+        //     {
+        //       conn.Dispose();
+        //     }
+        // }
         //Mathod to delete specific client by id.
         public void DeleteThis()
         {
@@ -195,20 +195,20 @@ namespace HairSalon.Models
               conn.Dispose();
             }
         }
-        //Method to clear all clients from the database.
-        public static void DeleteAll()
-        {
-            MySqlConnection conn = DB.Connection();
-            conn.Open();
-
-            var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"DELETE FROM clients;";
-            cmd.ExecuteNonQuery();
-            conn.Close();
-            if(conn != null)
-            {
-              conn.Dispose();
-            }
-        }
+        // //Method to clear all clients from the database.
+        // public static void DeleteAll()
+        // {
+        //     MySqlConnection conn = DB.Connection();
+        //     conn.Open();
+        //
+        //     var cmd = conn.CreateCommand() as MySqlCommand;
+        //     cmd.CommandText = @"DELETE FROM clients;";
+        //     cmd.ExecuteNonQuery();
+        //     conn.Close();
+        //     if(conn != null)
+        //     {
+        //       conn.Dispose();
+        //     }
+        // }
     }
 }
