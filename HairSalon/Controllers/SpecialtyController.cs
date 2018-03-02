@@ -11,7 +11,7 @@ namespace HairSalon.Controllers
     public ActionResult SpecialtyIndex()
     {
       List<Specialty> allSpecialties = Specialty.GetAll();
-      
+
       return View(allSpecialties);
     }
 
@@ -85,6 +85,13 @@ namespace HairSalon.Controllers
       Specialty thisSpecialty = Specialty.Find(specialtyId);
 
       thisSpecialty.DeleteOne();
+
+      return RedirectToAction("SpecialtyIndex");
+    }
+    [HttpPost("/specialties/delete")]
+    public ActionResult DeleteAll(int clientId)
+    {
+      Client.DeleteAll();
 
       return RedirectToAction("SpecialtyIndex");
     }

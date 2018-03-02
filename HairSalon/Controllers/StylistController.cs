@@ -85,5 +85,20 @@ namespace HairSalon.Controllers
 
       return RedirectToAction("StylistIndex");
     }
+
+    // [HttpPost("/stylists/delete")]
+    // public ActionResult DeleteAll(int stylistId)
+    // {
+    //   Stylist.DeleteAll();
+    //
+    //   return RedirectToAction("StylistIndex");
+    // }
+    [HttpGet("/stylists/delete")]
+    public ActionResult DeleteAll()
+    {
+      Stylist.DeleteAll();
+
+      return RedirectToAction("StylistIndex");
+    }
   }
 }

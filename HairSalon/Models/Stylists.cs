@@ -245,6 +245,10 @@ namespace HairSalon.Models
       cmd.CommandText = @"DELETE FROM stylists;";
       cmd.ExecuteNonQuery();
       conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
     }
   }
 }
