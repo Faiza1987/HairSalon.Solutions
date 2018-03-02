@@ -189,7 +189,7 @@ namespace HairSalon.Models
       }
       return newSpecialty;
     }
-    public void Edit(string newDescription)
+    public void UpdateName(string newDescription)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
@@ -215,7 +215,7 @@ namespace HairSalon.Models
         conn.Dispose();
       }
     }
-    public void DeleteThis()
+    public void DeleteOne()
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();

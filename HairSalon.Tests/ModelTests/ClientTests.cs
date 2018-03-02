@@ -15,10 +15,10 @@ namespace HairSalon.Tests
       DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=faiza_husain_test;";
     }
 
-    // public void Dispose()
-    // {
-    //   Client.DeleteAll();
-    // }
+    public void Dispose()
+    {
+      Client.DeleteAll();
+    }
 
     [TestMethod]
     public void GetAll_DatabaseEmptyAtFirst_0()
@@ -31,8 +31,8 @@ namespace HairSalon.Tests
     [TestMethod]
     public void Equals_OverrideTrueIfClientsAreTheSame_Client()
     {
-      Client newClient = new Client("Mehreen", 1, 1);
-      Client secondClient = new Client("Arya", 1, 1);
+      Client newClient = new Client("Mehreen", 1);
+      Client secondClient = new Client("Arya", 1);
 
       bool result = secondClient.Equals(newClient);
 
@@ -93,7 +93,7 @@ namespace HairSalon.Tests
       List<Client> expected = new List<Client>{secondClient};
 
       //Act
-      firstClient.DeleteThis();
+      firstClient.DeleteOne();
       List<Client> actual = Client.GetAll();
 
       //Assert

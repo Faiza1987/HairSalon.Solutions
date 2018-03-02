@@ -75,8 +75,28 @@ namespace HairSalon.Models
       }
       return allStylists;
     }
+    public void AddClient(Client newClient)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO clients_stylists (stylist_id) VALUES (@stylistId);";
+
+      MySqlParameter stylist_id = new MySqlParameter();
+      stylist_id.ParameterName = "@stylistId";
+      stylist_id.Value = _id;
+      cmd.Parameters.Add(stylist_id);
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+
     //Method to get all clients from the database that are attached to a specific stylist's id
-    public List<Client> GetAllClients()
+    public List<Client> GetClients()
     {
       List<Client> allClients = new List<Client>{};
 
@@ -167,34 +187,34 @@ namespace HairSalon.Models
       return foundStylist;
     }
     //Method to update the name of the client
-    public void UpdateName(string newNameInput)
+    public void UpdateName(string newName)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
-
       var cmd = conn.CreateCommand() as MySqlCommand;
-      //Query to update stylist info in the table called stylists based on id.
-      cmd.CommandText = @"UPDATE stylists SET name = @newName WHERE id = @thisId;";
-      //This will look for the stylist by id
-      MySqlParameter stylistId = new MySqlParameter();
-      stylistId.ParameterName = "@thisId";
-      stylistId.Value = this._id;
-      cmd.Parameters.Add(stylistId);
-      //And then the new name will overwrite the name that is already in the table
-      MySqlParameter newName = new MySqlParameter();
-      newName.ParameterName = "@newName";
-      newName.Value = newNameInput;
-      cmd.Parameters.Add(newName);
+      cmd.CommandText = @"UPDATE stylists SET name = @newName WHERE id = @searchId;";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@searchId";
+      searchId.Value = _id;
+      cmd.Parameters.Add(searchId);
+
+      MySqlParameter name = new MySqlParameter();
+      name.ParameterName = "@newName";
+      name.Value = newName;
+      cmd.Parameters.Add(name);
 
       cmd.ExecuteNonQuery();
+      _name = newName;
       conn.Close();
       if (conn != null)
       {
         conn.Dispose();
       }
     }
+
     //Method to delete specific stylists from the list based on the id
-    public void DeleteThis()
+    public void DeleteOne()
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();

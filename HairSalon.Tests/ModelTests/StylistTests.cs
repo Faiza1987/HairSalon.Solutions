@@ -90,7 +90,7 @@ namespace HairSalon.Tests
       List<Stylist> expected = new List<Stylist>{secondStylist};
 
       //Act
-      firstStylist.DeleteThis();
+      firstStylist.DeleteOne();
       List<Stylist> actual = Stylist.GetAll();
 
       //Assert
@@ -110,7 +110,7 @@ namespace HairSalon.Tests
       List<Client> expected = new List<Client>{firstClient, secondClient};
 
       //Act
-      List<Client> result = firstStylist.GetAllClients();
+      List<Client> result = firstStylist.GetClients();
 
       //Assert
       CollectionAssert.AreEqual(expected, result);

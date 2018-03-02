@@ -1,0 +1,17 @@
+@{
+  Layout = "_Layout";
+}
+
+<h3>Add Specialty</h3>
+<br>
+<hr>
+<form action="/specialties" method="post">
+  <label for="name">Specialty Name: </label>
+  <input required type="text" name="specialty-name" placeholder="Specialty Name" id="name">
+
+  <hr>
+  <button type="submit"> Add </button>
+</form>
+<br>
+<p><a href="/"> Home </a></p>
+<p><a href="/specialties"> View all Specialties</a></p>

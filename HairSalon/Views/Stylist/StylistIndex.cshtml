@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+<div class="container">
+  <h3>Stylists:</h3>
+  @if (Model != null)
+  {
+    <ul>
+      @foreach (var stylist in Model)
+      {
+        <li><a href="/stylists/@stylist.GetId()">@stylist.GetName()</a>
+        <a href="/stylists/@stylist.GetId()/update"> Edit</a> || <a href="/stylists/@stylist.GetId()/delete"> Delete</a></li>
+      }
+    </ul>
+  }
+  <br>
+  <h4><a href="/stylists/new"> Add stylist</a></h4>
+  <hr>
+  <h4><a href="/"> Home </a></h4>
+</div>

@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+<div class="container">
+  <h3>Our Specialties:</h3>
+  @if (Model != null)
+  {
+    <ul>
+      @foreach (var specialty in Model)
+      {
+        <li><a href="/specialties/@specialty.GetId()">@specialty.GetDescription()</a>
+        <a href="/specialties/@specialty.GetId()/update"> Edit</a> || <a href="/specialties/@specialty.GetId()/delete"> Delete</a></li>
+      }
+    </ul>
+  }
+  <br>
+  <h4><a href="/specialties/new"> Add specialty</a></h4>
+  <hr>
+  <h4><a href="/"> Home </a></h4>
+</div>
