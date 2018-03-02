@@ -66,7 +66,7 @@ namespace HairSalon.Models
                 string clientName = rdr.GetString(1);
                 int clientStylist = rdr.GetInt32(2);
                 //The clients that are retrieved from the database will be added to the list which will be displayed on the webpage
-                Client newClient = new Client(clientName, clientStylist, clientId);
+                Client newClient = new Client(clientName, clientId);
                 allClients.Add(newClient);
             }
             conn.Close();

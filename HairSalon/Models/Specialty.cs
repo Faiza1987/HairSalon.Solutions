@@ -78,7 +78,7 @@ namespace HairSalon.Models
       MySqlParameter specialty_id = new MySqlParameter();
       specialty_id.ParameterName = "@SpecialtyId";
       specialty_id.Value = _id;
-      cmd.Paramerters.Add(Specialty_id);
+      cmd.Parameters.Add(specialty_id);
 
       cmd.ExecuteNonQuery();
       conn.Close();
@@ -96,7 +96,7 @@ namespace HairSalon.Models
 
       MySqlParameter specialtyId = new MySqlParameter();
       specialtyId.ParameterName = "@specialtyId";
-      specialtyIdParameter.Value = _id;
+      specialtyId.Value = _id;
       cmd.Parameters.Add(specialtyId);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
@@ -197,7 +197,12 @@ namespace HairSalon.Models
       cmd.CommandText = @"UPDATE specialties SET description = @newDescription WHERE id = @searchId;";
 
       MySqlParameter searchId = new MySqlParameter();
-      searchId.ParameterName = "@newDescription";
+      searchId.ParameterName = "@searchId";
+      searchId.Value = _id;
+      cmd.Parameters.Add(searchId);
+
+      MySqlParameter description = new MySqlParameter();
+      description.ParameterName = "@newDescription";
       description.Value = newDescription;
       cmd.Parameters.Add(description);
 
@@ -215,7 +220,7 @@ namespace HairSalon.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText @"DELETE FROM specialties WHERE id = @specialtyId; DELETE FROM clients_stylists WHERE specialty_id = @specialtyId;";
+      cmd.CommandText = @"DELETE FROM specialties WHERE id = @specialtyId; DELETE FROM clients_stylists WHERE specialty_id = @specialtyId;";
 
       MySqlParameter specialtyIdParameter = new MySqlParameter();
       specialtyIdParameter.ParameterName = "@specialtyId";
@@ -230,7 +235,7 @@ namespace HairSalon.Models
         conn.Dispose();
       }
     }
-    public static DeleteAll()
+    public static void DeleteAll()
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
