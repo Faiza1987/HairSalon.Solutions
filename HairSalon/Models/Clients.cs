@@ -8,12 +8,10 @@ namespace HairSalon.Models
     {
         private int _id;
         private string _name;
-        private int _stylistId;
 
-        public Client(string name, int stylistId, int id = 0)
+        public Client(string name, int id = 0)
         {
             _name = name;
-            _stylistId = stylistId;
             _id = id;
         }
         //GETTERS AND SETTERS
@@ -29,10 +27,7 @@ namespace HairSalon.Models
         {
           _name = name;
         }
-        public int GetStylistId()
-        {
-            return _stylistId;
-        }
+
         //Will overrirde the new entry into a database if its exact match already exists in the database
         public override bool Equals(System.Object otherClient)
         {
@@ -88,17 +83,12 @@ namespace HairSalon.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO clients (name, stylistId) VALUES (@name, @stylist_id);";
+            cmd.CommandText = @"INSERT INTO clients (name) VALUES (@name);";
 
             MySqlParameter clientName = new MySqlParameter();
             clientName.ParameterName = "@name";
             clientName.Value = this._name;
             cmd.Parameters.Add(clientName);
-
-            MySqlParameter clientStylist = new MySqlParameter();
-            clientStylist.ParameterName = "@stylist_id";
-            clientStylist.Value = this._stylistId;
-            cmd.Parameters.Add(clientStylist);
 
             cmd.ExecuteNonQuery();
             _id = (int) cmd.LastInsertedId;
@@ -127,17 +117,15 @@ namespace HairSalon.Models
             //The variables are created with default values so that the client retrieved from the database has somewhere to be stored. The found client info will change the default values of the variables.
             int foundId = 0;
             string foundName = "";
-            int foundStylistId = 0;
 
             while(rdr.Read())
             {
               //The values in the parens are just telling the database that the id, name, and stylist id of the client are at these particular indexes on the array(table).
                 foundId = rdr.GetInt32(0);
                 foundName = rdr.GetString(1);
-                foundStylistId = rdr.GetInt32(2);
             }
             //The found clients are put in the list.
-            Client foundClient = new Client(foundName, foundStylistId, foundId);
+            Client foundClient = new Client(foundName, foundId);
             conn.Close();
             if(conn != null)
             {

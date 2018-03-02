@@ -78,18 +78,18 @@ namespace HairSalon.Models
     //Method to get all clients from the database that are attached to a specific stylist's id
     public List<Client> GetAllClients()
     {
-      List<Client> allClients = new List<Client>();
+      List<Client> allClients = new List<Client>{};
 
       MySqlConnection conn = DB.Connection();
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
       //This Query tells the database to select clients from the clients table that all have the same stylist id
-      cmd.CommandText = @"SELECT * FROM clients WHERE stylistId = @thisId;";
+      cmd.CommandText = @"SELECT clients.* FROM stylists JOIN clients_stylists ON (stylists.id = clients_stylists.stylist_id) JOIN clients ON (clients_stylists.client_id = clients.id) WHERE stylists.id = @StylistId;";
 
       MySqlParameter stylistId = new MySqlParameter();
-      stylistId.ParameterName = "@thisId";
-      stylistId.Value = this._id;
+      stylistId.ParameterName = "@StylistId";
+      stylistId.Value = _id;
       cmd.Parameters.Add(stylistId);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
@@ -97,9 +97,8 @@ namespace HairSalon.Models
       {
         int clientId = rdr.GetInt32(0);
         string clientName = rdr.GetString(1);
-        int clientStylist = rdr.GetInt32(2);
         //The clients that are retrieved from the database will be added to the list which will be displayed on the webpage
-        Client newClient = new Client(clientName, clientStylist, clientId);
+        Client newClient = new Client(clientName, clientId);
         allClients.Add(newClient);
       }
       conn.Close();
@@ -121,7 +120,7 @@ namespace HairSalon.Models
 
       MySqlParameter stylistName = new MySqlParameter();
       stylistName.ParameterName = "@name";
-      stylistName.Value = this._name;
+      stylistName.Value = _name;
       cmd.Parameters.Add(stylistName);
 
       cmd.ExecuteNonQuery();

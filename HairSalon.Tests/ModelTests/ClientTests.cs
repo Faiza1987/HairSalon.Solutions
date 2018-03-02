@@ -15,10 +15,10 @@ namespace HairSalon.Tests
       DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=faiza_husain_test;";
     }
 
-    public void Dispose()
-    {
-      Client.DeleteAll();
-    }
+    // public void Dispose()
+    // {
+    //   Client.DeleteAll();
+    // }
 
     [TestMethod]
     public void GetAll_DatabaseEmptyAtFirst_0()
