@@ -87,7 +87,7 @@ namespace HairSalon.Controllers
     }
 
     [HttpGet("/clients/delete")]
-    public ActionResult DeleteAll(int clientId)
+    public ActionResult DeleteAll()
     {
       Client.DeleteAll();
 
