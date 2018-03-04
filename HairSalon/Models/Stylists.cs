@@ -138,7 +138,7 @@ namespace HairSalon.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO clients_stylists (specialty_id, stylist_id) VALUES (@SpecialtyId, @StylistId);";
+      cmd.CommandText = @"INSERT INTO specialties_stylists (specialty_id, stylist_id) VALUES (@SpecialtyId, @StylistId);";
 
       MySqlParameter specialty_id = new MySqlParameter();
       specialty_id.ParameterName = "@SpecialtyId";
@@ -149,6 +149,8 @@ namespace HairSalon.Models
       stylist_id.ParameterName = "@StylistId";
       stylist_id.Value = _id;
       cmd.Parameters.Add(stylist_id);
+
+      Console.WriteLine("When adding speciality, the stylist id is: " + _id);
 
       cmd.ExecuteNonQuery();
       conn.Close();
@@ -166,7 +168,7 @@ namespace HairSalon.Models
 
       var cmd = conn.CreateCommand() as MySqlCommand;
 
-      cmd.CommandText = @"SELECT specialties.* FROM stylists JOIN clients_stylists ON (stylists.id = clients_stylists.stylist_id) JOIN specialties ON (clients_stylists.specialty_id = specialties.id) WHERE stylists.id = @StylistId;";
+      cmd.CommandText = @"SELECT specialties.* FROM stylists JOIN specialties_stylists ON (stylists.id = specialties_stylists.stylist_id) JOIN specialties ON (specialties_stylists.specialty_id = specialties.id) WHERE stylists.id = @StylistId;";
 
       MySqlParameter stylistId = new MySqlParameter();
       stylistId.ParameterName = "@StylistId";
@@ -197,12 +199,17 @@ namespace HairSalon.Models
 
       var cmd = conn.CreateCommand() as MySqlCommand;
       //Query to tell the database to insert these new entries into the stylists table by name
-      cmd.CommandText = @"INSERT INTO stylists (name) VALUES (@name);INSERT INTO clients_stylists (name, id) ";
+      cmd.CommandText = @"INSERT INTO stylists (name) VALUES (@name); INSERT INTO clients_stylists (id) VALUES (@id);";
 
       MySqlParameter stylistName = new MySqlParameter();
       stylistName.ParameterName = "@name";
       stylistName.Value = _name;
       cmd.Parameters.Add(stylistName);
+
+      MySqlParameter id = new MySqlParameter();
+      id.ParameterName = "@id";
+      id.Value = this._id;
+      cmd.Parameters.Add(id);
 
       cmd.ExecuteNonQuery();
       _id = (int) cmd.LastInsertedId;
@@ -227,6 +234,8 @@ namespace HairSalon.Models
       stylistId.Value = id;
       cmd.Parameters.Add(stylistId);
 
+      // Console.WriteLine("search id is: " + id);
+
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       //The variables are created with default values so that the client retrieved from the database has somewhere to be stored. The found client info will change the default values of the variables.
       int foundId = 0;
@@ -237,6 +246,7 @@ namespace HairSalon.Models
         //The values in the parens are just telling the database that the id, name are at these particular indexes on the array(table).
         foundId = rdr.GetInt32(0);
         foundName = rdr.GetString(1);
+        Console.WriteLine("I am able to find entry having id: " + id);
       }
       //The found clients are put in the list.
       Stylist foundStylist = new Stylist(foundName, foundId);
@@ -252,6 +262,7 @@ namespace HairSalon.Models
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
+
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"UPDATE stylists SET name = @newName WHERE id = @searchId;";
 
@@ -267,6 +278,7 @@ namespace HairSalon.Models
 
       cmd.ExecuteNonQuery();
       _name = newName;
+
       conn.Close();
       if (conn != null)
       {
@@ -290,6 +302,7 @@ namespace HairSalon.Models
       cmd.Parameters.Add(stylistId);
 
       cmd.ExecuteNonQuery();
+
       conn.Close();
       if (conn != null)
       {
@@ -304,7 +317,9 @@ namespace HairSalon.Models
 
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"DELETE FROM stylists;";
+
       cmd.ExecuteNonQuery();
+
       conn.Close();
       if(conn != null)
       {

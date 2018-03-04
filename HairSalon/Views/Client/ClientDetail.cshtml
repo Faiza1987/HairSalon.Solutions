@@ -1,4 +1,4 @@
-@{
+@* /* @{
   Layout = "_Layout";
 }
 @using HairSalon.Models;
@@ -24,7 +24,7 @@
   <select id="stylistid" name="stylistid" type= "text">
     @foreach (var stylist in @Model["allStylists"])
     {
-      <option value='@stylistGetId()'>@stylist.GetName()</option>
+      <option value='@stylist.GetId()'>@stylist.GetName()</option>
     }
   </select>
   <br>
@@ -32,4 +32,4 @@
   <button type="submit"> Add </button>
 </form>
 <br>
-<p><a href="/"> Home </a></p>
+<p><a href="/"> Home </a></p> */ *@

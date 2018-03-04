@@ -45,7 +45,7 @@ namespace HairSalon.Controllers
       model.Add("clientStylists", clientStylists);
       model.Add("allStylists", allStylists);
 
-      return View("ClientDetails", model);
+      return View("ClientDetail", model);
     }
 
     [HttpPost("/clients/{clientId}/stylists/new")]
@@ -70,11 +70,13 @@ namespace HairSalon.Controllers
     [HttpPost("/clients/{id}/update")]
     public ActionResult Update(int id)
     {
-      string newName = Request.Form["newname"];
+      string newName = Request.Form[("new-name")];
       Client thisClient = Client.Find(id);
 
       thisClient.UpdateName(newName);
-      return RedirectToAction("ClientIndex");
+      List<Client> allClients = Client.GetAll();
+      return View("ClientIndex", allClients);
+
     }
 
     [HttpGet("/clients/{clientId}/delete")]

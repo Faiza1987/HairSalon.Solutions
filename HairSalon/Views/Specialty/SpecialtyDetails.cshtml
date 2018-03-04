@@ -5,4 +5,15 @@
 @using HairSalon.Models;
 
 
-<h3>The following stylists have this specialty:</h3>
+<h2>Specialty: @Model["specialty"].GetDescription()</h2>
+<hr>
+@if (@Model["stylistSpecialties"].Count != 0)
+{
+  <h4> The following stylists have this specialty:</h4>
+  <ul>
+  @foreach (Stylist stylist in @Model["stylistSpecialties"])
+  {
+    <li>@stylist.GetName()<a href="/stylists/@stylist.GetId()/update"> Edit </a> | <a href="/stylists/@stylist.GetId()/delete"> Delete </a></li>
+  }
+  </ul>
+}
