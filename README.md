@@ -17,18 +17,22 @@ Navigate to localhost:5000 in your preferred browser.
 
 #### Specifications
 
-* Program should allow the user to get a list of all stylists on the database.
-* Program should allow the user to save stylists to the database.
-* Program should allow user to update stylist information (name) in the database.
-* Program should allow user to add a client to the stylist in the database.
-* Program should allow user to delete a stylist from the database (all and single).
-* Program should allow user to delete a client from the database (all and single).
-* Program should allow user to update the name of the client in the database.
-* Program should allow user to add specialties to the database.
-* Program should allow user to view all specialties in the database.
-* Program should allow user to edit specialty name.
-* Program should allow user to delete a specialty from the database (all and single).
-p 
+* Program should allow the user to add a stylist to the database.
+* Program should allow the user to add a client to the database.
+* Program should allow the user to add a specialty to the database.
+* Program should allow the user to update stylist name.
+* Program should allow the user to update client name.
+* Program should allow the user to update the specialty description.
+* Program should allow the user to add a client to the stylist.
+* Program should allow the user to add a specialty to the stylist.
+* Program should allow the user to click on a stylist and see all their clients and specialties.
+* Program should allow the user to click on a specialty and see all the stylists with that specialty.
+* Program should allow the user to delete a single stylist.
+* Program should allow the user to delete a single client.
+* Program should allow the user to delete a single specialty.
+* Program should allow the user to delete all stylists.
+* Program should allow the user to delete all clients.
+* Program should allow the user to delete all specialties.
 
 
 #### Technologies Used
