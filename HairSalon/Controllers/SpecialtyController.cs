@@ -49,15 +49,25 @@ namespace HairSalon.Controllers
       return View("SpecialtyDetails", model);
     }
 
-    [HttpPost("/specialty/{id}/addStylist")]
-    public ActionResult AddSpecialStylist(int id)
+    [HttpPost("/specialties/{specialtyId}/stylists/new")]
+    public ActionResult SpecialtyStylist(int specialtyId)
     {
-      Specialty thisSpecialty = Specialty.Find(id);
-      Stylist newStylist = Stylist.Find(Int32.Parse(Request.Form["new-stylist"]));
+      Specialty thisSpecialty = Specialty.Find(specialtyId);
+
+      Stylist newStylist = Stylist.Find(Int32.Parse(Request.Form["stylist-id"]));
       thisSpecialty.AddStylist(newStylist);
-      
-      return RedirectToAction("SpecialDetails", id);
+
+      return RedirectToAction("SpecialtyDetail", new {id = specialtyId});
     }
+    // [HttpPost("/specialty/{id}/addStylist")]
+    // public ActionResult AddSpecialStylist(int id)
+    // {
+    //   Specialty thisSpecialty = Specialty.Find(id);
+    //   Stylist newStylist = Stylist.Find(Int32.Parse(Request.Form["new-stylist"]));
+    //   thisSpecialty.AddStylist(newStylist);
+    //
+    //   return RedirectToAction("SpecialDetails", id);
+    // }
 
     [HttpGet("/specialties/{id}/update")]
     public ActionResult SpecialtyUpdateForm(int id)

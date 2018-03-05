@@ -31,7 +31,7 @@
 </form>
 <br>
 <hr>
-@* @if (@Model["stylistClients"].Count != 0)
+@if (@Model["stylistClients"].Count != 0)
 {
   <h4> This stylist has the following clients:</h4>
   <ul>
@@ -44,7 +44,7 @@
 <br>
 <h4>Add a client:</h4>
 <form action='/stylists/@Model["stylist"].GetId()/clients/new' method="post">
-  <label for="client"> Select a client:</label>
+  <label for="client-id"> Select a client:</label>
   <select id="client-id" name="client-id" type="text">
     @foreach (var client in @Model["allClients"])
     {
@@ -53,5 +53,7 @@
   </select>
   <br>
   <button type="submit"> Add </button>
-</form> *@
+</form>
+<br>
+<hr>
 <p><a href="/"> Return Home </a></p>

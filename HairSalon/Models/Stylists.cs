@@ -150,7 +150,7 @@ namespace HairSalon.Models
       stylist_id.Value = _id;
       cmd.Parameters.Add(stylist_id);
 
-      Console.WriteLine("When adding speciality, the stylist id is: " + _id);
+      // Console.WriteLine("When adding speciality, the stylist id is: " + _id);
 
       cmd.ExecuteNonQuery();
       conn.Close();

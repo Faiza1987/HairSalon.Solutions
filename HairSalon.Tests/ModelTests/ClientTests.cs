@@ -1,8 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using HairSalon.Models;
 using HairSalon;
 using System;
-using HairSalon.Models;
-using System.Collections.Generic;
 
 namespace HairSalon.Tests
 {
@@ -18,6 +18,8 @@ namespace HairSalon.Tests
     public void Dispose()
     {
       Client.DeleteAll();
+      Stylist.DeleteAll();
+      Specialty.DeleteAll();
     }
 
     [TestMethod]
@@ -32,20 +34,32 @@ namespace HairSalon.Tests
     public void Equals_OverrideTrueIfClientsAreTheSame_Client()
     {
       Client newClient = new Client("Mehreen", 1);
-      Client secondClient = new Client("Arya", 1);
+      Client secondClient = new Client("Mehreen", 1);
 
       bool result = secondClient.Equals(newClient);
 
       Assert.AreEqual(true, result);
+    }
+    [TestMethod]
+    public void Edit_UpdateClientName_Client()
+    {
+        Client testClient = new Client("Faiza", 1);
+        testClient.Save();
+
+        testClient.UpdateName("Ahsan");
+
+        Client result = Client.Find(testClient.GetId());
+        Assert.AreEqual("Ahsan", result.GetName());
+        Assert.AreEqual(result);
     }
 
     [TestMethod]
     public void Save_SavesToDatabase_ClientList()
     {
       //Assign
-      Client firstClient = new Client("Mehreen", 1);
+      Client firstClient = new Client("Mehreen", 3);
       firstClient.Save();
-      Client secondClient = new Client("Arya", 1);
+      Client secondClient = new Client("Arya", 4);
       secondClient.Save();
       List<Client> expected = new List<Client>{secondClient, firstClient};
 
@@ -71,33 +85,33 @@ namespace HairSalon.Tests
       Assert.AreEqual(testId, result);
     }
 
-    [TestMethod]
-    public void Find_FindsClientInDatabase_Client()
-    {
-      Client testClient = new Client("Jesse", 1);
-      testClient.Save();
-
-      Client result = Client.Find(testClient.GetId());
-
-      Assert.AreEqual(testClient, result);
-    }
-
-    [TestMethod]
-    public void DeleteThis_DeleteSpecificClient_ClientList()
-    {
-      //Assign
-      Client firstClient = new Client("Mehreen", 1);
-      firstClient.Save();
-      Client secondClient = new Client("Arya", 1);
-      secondClient.Save();
-      List<Client> expected = new List<Client>{secondClient};
-
-      //Act
-      firstClient.DeleteOne();
-      List<Client> actual = Client.GetAll();
-
-      //Assert
-      CollectionAssert.AreEqual(expected, actual);
-    }
+    // [TestMethod]
+    // public void Find_FindsClientInDatabase_Client()
+    // {
+    //   Client testClient = new Client("Jesse", 1);
+    //   testClient.Save();
+    //
+    //   Client result = Client.Find(testClient.GetId());
+    //
+    //   Assert.AreEqual(testClient, result);
+    // }
+    //
+    // [TestMethod]
+    // public void DeleteThis_DeleteSpecificClient_ClientList()
+    // {
+    //   //Assign
+    //   Client firstClient = new Client("Mehreen", 1);
+    //   firstClient.Save();
+    //   Client secondClient = new Client("Arya", 1);
+    //   secondClient.Save();
+    //   List<Client> expected = new List<Client>{secondClient};
+    //
+    //   //Act
+    //   firstClient.DeleteOne();
+    //   List<Client> actual = Client.GetAll();
+    //
+    //   //Assert
+    //   CollectionAssert.AreEqual(expected, actual);
+    // }
   }
 }

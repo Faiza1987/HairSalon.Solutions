@@ -81,7 +81,7 @@ namespace HairSalon.Models
 
       MySqlParameter stylist_id = new MySqlParameter();
       stylist_id.ParameterName = "@StylistId";
-      stylist_id.Value = stylist_id;
+      stylist_id.Value = newStylist.GetId();
       cmd.Parameters.Add(stylist_id);
 
       MySqlParameter specialty_id = new MySqlParameter();
@@ -97,23 +97,24 @@ namespace HairSalon.Models
       }
     }
     public List<Stylist> GetStylists()
-{
-    List<Stylist> newStylists = new List<Stylist>{};
+    {
+    List<Stylist> allStylists = new List<Stylist>{};
 
     MySqlConnection conn = DB.Connection();
     conn.Open();
-    MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-    cmd.CommandText = @"SELECT stylists.* FROM stylists
-        JOIN specialties_stylists ON (stylists.id = specialties_stylists.stylist_id)
-        JOIN specialties ON (specialties_stylists.specialty_id = specialties.id)
+
+    var cmd = conn.CreateCommand() as MySqlCommand;
+    cmd.CommandText = @"SELECT stylists.* FROM specialties
+        JOIN specialties_stylists ON (specialties.id = specialties_stylists.specialty_id)
+        JOIN stylists ON (specialties_stylists.stylist_id = stylists.id)
         WHERE specialties.id = @SpecialtyId;";
 
-    MySqlParameter SpecialtyId = new MySqlParameter();
-    SpecialtyId.ParameterName = "@SpecialtyId";
-    SpecialtyId.Value = this._id;
-    cmd.Parameters.Add(SpecialtyId);
+    MySqlParameter specialtyId = new MySqlParameter();
+    specialtyId.ParameterName = "@SpecialtyId";
+    specialtyId.Value = _id;
+    cmd.Parameters.Add(specialtyId);
 
-    MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+    var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
     while(rdr.Read())
     {
@@ -121,7 +122,7 @@ namespace HairSalon.Models
         string stylistName = rdr.GetString(1);
 
         Stylist newStylist = new Stylist(stylistName, stylistId);
-        newStylists.Add(newStylist);
+        allStylists.Add(newStylist);
     }
 
     conn.Close();
@@ -129,7 +130,7 @@ namespace HairSalon.Models
     {
         conn.Dispose();
     }
-    return newStylists;
+    return allStylists;
 }
     public void Save()
     {

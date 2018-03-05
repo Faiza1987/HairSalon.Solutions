@@ -17,3 +17,17 @@
   }
   </ul>
 }
+<br>
+<hr>
+<h4>Add a stylist:</h4>
+<form action='/specialties/@Model["specialty"].GetId()/stylists/new' method="post">
+  <label for="stylist-id"> Select a stylist:</label>
+  <select id="stylist-id" name="stylist-id" type="text">
+    @foreach (var stylist in @Model["allStylists"])
+    {
+      <option value="@stylist.GetId()">@stylist.GetName()</option>
+    }
+  </select>
+  <br>
+  <button type="submit"> Add </button>
+</form>
