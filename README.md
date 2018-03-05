@@ -46,5 +46,5 @@ Navigate to localhost:5000 in your preferred browser.
 #### Support and Contact Details
   * If you encounter any bugs or would like to make suggestions regarding this project, please feel free to open an issue within the repository or email me at faiza.ahsan1222@gmail.com
 
-###License
+### License
   * This project is distributed under the MIT License.
