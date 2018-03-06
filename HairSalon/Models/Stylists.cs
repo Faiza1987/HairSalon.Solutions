@@ -199,7 +199,7 @@ namespace HairSalon.Models
 
       var cmd = conn.CreateCommand() as MySqlCommand;
       //Query to tell the database to insert these new entries into the stylists table by name
-      cmd.CommandText = @"INSERT INTO stylists (name) VALUES (@name); INSERT INTO clients_stylists (id) VALUES (@id);";
+      cmd.CommandText = @"INSERT INTO stylists (name) VALUES (@name);";
 
       MySqlParameter stylistName = new MySqlParameter();
       stylistName.ParameterName = "@name";
@@ -316,7 +316,7 @@ namespace HairSalon.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM stylists;";
+      cmd.CommandText = @"DELETE FROM stylists; DELETE FROM clients_stylists; DELETE FROM specialties_stylists;";
 
       cmd.ExecuteNonQuery();
 

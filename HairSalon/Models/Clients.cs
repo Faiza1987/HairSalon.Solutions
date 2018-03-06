@@ -82,7 +82,7 @@ namespace HairSalon.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO clients (name) VALUES (@name); INSERT INTO clients_stylists (id) VALUES (@id);";
+      cmd.CommandText = @"INSERT INTO clients (name) VALUES (@name);";
 
       MySqlParameter clientName = new MySqlParameter();
       clientName.ParameterName = "@name";
@@ -254,7 +254,7 @@ namespace HairSalon.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM clients;";
+      cmd.CommandText = @"DELETE FROM clients; DELETE FROM clients_stylists";
 
       cmd.ExecuteNonQuery();
 
